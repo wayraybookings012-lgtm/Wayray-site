@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>XIO-WAY Chatbot</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0f0f1a;
+    color: white;
+}
+
+.container {
+    max-width: 500px;
+    margin: auto;
+    padding: 10px;
+}
+
+.header {
+    text-align: center;
+    padding: 15px;
+}
+
+.header img {
+    width: 120px;
+    border-radius: 20px;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+.chat-box {
+    background: #1c1c2e;
+    height: 420px;
+    overflow-y: auto;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.msg {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.user {
+    background: #2e7dff;
+    text-align: right;
+}
+
+.bot {
+    background: #33334d;
+}
+
+.input-area {
+    display: flex;
+    margin-top: 10px;
+}
+
+input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px;
+    margin-left: 5px;
+    border: none;
+    background: #2e7dff;
+    color: white;
+    border-radius: 5px;
+}
+
+.option-btn {
+    display: block;
+    width: 100%;
+    margin: 5px 0;
+    padding: 10px;
+    background: #444;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.option-btn:hover {
+    background: #666;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <img src="bot.png" alt="bot">
+        <h2>XIO-WAY Chat Bot</h2>
+    </div>
+
+    <div class="chat-box" id="chat"></div>
+
+    <div class="input-area">
+        <input id="input" placeholder="Type 'hi'..." />
+        <button onclick="sendMsg()">Send</button>
+    </div>
+
+</div>
+
+<script>
+function addMsg(text, type="bot") {
+    let div = document.createElement("div");
+    div.className = "msg " + type;
+    div.innerHTML = text;
+    document.getElementById("chat").appendChild(div);
+    document.getElementById("chat").scrollTop = 999999;
+}
+
+function sendMsg() {
+    let input = document.getElementById("input");
+    let text = input.value.trim().toLowerCase();
+
+    if (!text) return;
+
+    addMsg(input.value, "user");
+    input.value = "";
+
+    if (text === "hi") {
+        botIntro();
+    }
+}
+
+function botIntro() {
+    addMsg("Hello 👋 I am XIO-WAY, a XIO chat bot designed for Wayray thee Lyon. How can I assist you?");
+
+    let options = `
+        <button class="option-btn" onclick="socialMedia()">Wayray Social Media</button>
+        <button class="option-btn" onclick="whoIsWayray()">Who is Wayray</button>
+        <button class="option-btn" onclick="bookings()">Bookings</button>
+    `;
+
+    addMsg(options);
+}
+
+/* OPTION 1 */
+function socialMedia() {
+    addMsg(`
+        <b>Social Media</b><br><br>
+        Telegram: <a href="https://t.me/wayraytheelyon" target="_blank">Open Telegram</a><br>
+        Instagram: <a href="https://t.me/wayraytheelyon" target="_blank">Open Instagram</a><br>
+        TikTok: <a href="https://t.me/wayraytheelyon" target="_blank">Open TikTok</a>
+    `);
+}
+
+/* OPTION 2 */
+function whoIsWayray() {
+    addMsg(`
+        <b>Artist Profile</b><br><br>
+        Artist Name: Wayray thee Lyon<br>
+        Real Name: Thulane Zwelithini Nonyane<br>
+        Genre: Hip Hop | Afro Pop<br>
+        Origin: Pretoria, South Africa<br><br>
+
+        Wayray thee Lyon is a South African Hip Hop and Afro-Pop artist born and raised in Mabopane Block EW, Pretoria. He represents resilience, ambition, and real-life storytelling from township life.<br><br>
+
+        Raised by his late grandmother Sarah Stokie Moeletse, he developed discipline early in life. He attended Sello Primary School (Patric Moloto Primary) and M.H. Baloyi Secondary School where he focused on Dramatic Arts and Business Studies.<br><br>
+
+        Influences: AKA, Nasty C, Cassper Nyovest, Kwesta, Birdman.<br><br>
+
+        Core Identity: Story-driven Hip Hop / Afro-Pop artist focused on emotional honesty and street motivation.
+    `);
+}
+
+/* OPTION 3 */
+function bookings() {
+    addMsg(`
+        <b>Bookings</b><br><br>
+        Send your message + email below:<br><br>
+        <input id="email" placeholder="Your email"/><br><br>
+        <textarea id="msg" placeholder="Your message"></textarea><br><br>
+        <button class="option-btn" onclick="sendBooking()">Send Booking Request</button><br><br>
+
+        OR open Gmail:<br>
+        <button class="option-btn" onclick="openGmail()">Open Gmail App</button>
+    `);
+}
+
+function sendBooking() {
+    let email = document.getElementById("email").value;
+    let msg = document.getElementById("msg").value;
+
+    let mailto = `mailto:wayraybookings012@gmail.com?subject=Booking Request&body=Email: ${email}%0D%0AMessage: ${msg}`;
+    window.location.href = mailto;
+}
+
+function openGmail() {
+    window.location.href =
+        "mailto:wayraybookings012@gmail.com?subject=Booking Request";
+}
+
+/* auto greet if user types hi and presses enter */
+document.getElementById("input").addEventListener("keypress", function(e){
+    if (e.key === "Enter") sendMsg();
+});
+</script>
+
+</body>
+</html>
