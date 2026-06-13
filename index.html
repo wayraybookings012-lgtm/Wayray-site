@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Wayray thee Lyon</title>
+
 <style>
     body {
         margin: 0;
         font-family: Arial, sans-serif;
         background: linear-gradient(120deg, #000, #111, #1a1a1a);
         color: white;
-        overflow-x: hidden;
     }
 
     header {
@@ -21,34 +21,53 @@
         width: 220px;
         border-radius: 20px;
         box-shadow: 0 0 20px #00ffcc;
-        animation: float 4s ease-in-out infinite;
     }
 
-    @keyframes float {
-        0% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
-        100% { transform: translateY(0px); }
+    /* RIGHT MENU ICON */
+    .menu-container {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        z-index: 999;
     }
 
-    .typing {
-        font-size: 18px;
+    .menu-icon {
+        width: 40px;
+        cursor: pointer;
+        background: white;
+        padding: 5px;
+        border-radius: 6px;
+    }
+
+    /* DROPDOWN */
+    .dropdown {
+        display: none;
+        position: absolute;
+        right: 0;
+        margin-top: 10px;
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        min-width: 180px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .dropdown select {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        background: white;
+        color: black;
+        font-size: 14px;
+        outline: none;
+    }
+
+    .content {
         max-width: 900px;
         margin: auto;
         padding: 20px;
         line-height: 1.6;
         white-space: pre-wrap;
-    }
-
-    .dropdown {
-        text-align: center;
-        margin: 20px;
-    }
-
-    select {
-        padding: 10px;
-        border-radius: 10px;
-        border: none;
-        font-size: 16px;
     }
 
     .book {
@@ -63,7 +82,7 @@
     }
 
     .book img:hover {
-        transform: scale(1.1);
+        transform: scale(1.05);
     }
 
     footer {
@@ -77,22 +96,31 @@
 
 <body>
 
+<!-- RIGHT MENU -->
+<div class="menu-container">
+    <img src="menu.png" class="menu-icon" onclick="toggleMenu()">
+
+    <div class="dropdown" id="dropdownMenu">
+        <select onchange="openLink(this.value)">
+            <option value="">Menu</option>
+            <option value="https://ditto.fm/the-one-wayray">The One</option>
+            <option value="https://ditto.fm/who-could-have-guessed-it">Who Could Have Guessed It</option>
+            <option value="https://ditto.fm/wayray-ft-wayray-who-could-have-guessed-it-re-made">Remade Track</option>
+            <option value="https://ditto.fm/love-for-us">Love For Us</option>
+        </select>
+    </div>
+</div>
+
 <header>
     <h1>Wayray thee Lyon</h1>
     <img src="way.png" alt="Wayray thee Lyon">
 </header>
 
-<div class="typing" id="text"></div>
-
-<div class="dropdown">
-    <h3>Upcoming Music</h3>
-    <select onchange="openLink(this.value)">
-        <option value="">Select Song</option>
-        <option value="https://ditto.fm/the-one-wayray">The One</option>
-        <option value="https://ditto.fm/who-could-have-guessed-it">Who Could Have guessed it</option>
-        <option value="https://ditto.fm/wayray-ft-wayray-who-could-have-guessed-it-re-made">who could have guessed remade</option>
-        <option value="https://ditto.fm/love-for-us">love for us</option>
-    </select>
+<div class="content">
+Artist Name: Wayray thee Lyon
+Real Name: Thulane Zwelithini Nonyane
+Genre: Hip Hop | Afro Pop
+Origin: Pretoria, South Africa
 </div>
 
 <div class="book">
@@ -111,32 +139,10 @@
 </footer>
 
 <script>
-const text = `
-Artist Name: Wayray thee Lyon
-Real Name: Thulane Zwelithini Nonyane
-Genre: Hip Hop | Afro Pop
-Origin: Pretoria, South Africa
-
-Wayray thee Lyon is a South African Hip Hop and Afro-Pop artist born and raised in Mabopane Block EW, Pretoria. Emerging from an informal settlement environment, he represents a story of resilience, ambition, and self-belief shaped by real-life experiences in the streets of Pretoria.
-
-Raised by his late grandmother, Sarah Stokie Moeletse, Wayray developed discipline and direction from an early age, with strong values that continue to influence his music and mindset today.
-
-He attended Sello Primary School (Patric Moloto Primary School) and M.H. Baloyi Secondary School, where he discovered passion for Dramatic Arts and Business Studies.
-
-Influences: AKA, Nasty C, Cassper Nyovest, Kwesta, Birdman.
-
-Core Identity: Story-driven Hip Hop / Afro-Pop artist with emotional storytelling and street motivation.
-`;
-
-let i = 0;
-function typeWriter() {
-    if (i < text.length) {
-        document.getElementById("text").innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typeWriter, 25);
-    }
+function toggleMenu() {
+    const menu = document.getElementById("dropdownMenu");
+    menu.style.display = (menu.style.display === "block") ? "none" : "block";
 }
-typeWriter();
 
 function openLink(url) {
     if (url) window.open(url, "_blank");
