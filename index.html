@@ -1,283 +1,283 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wayray thee Lyon | Official Artist Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wayray thee Lyon | Official Artist Page</title>
 
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: #ffffff;
-        color: #1a1a1a;
-        line-height: 1.7;
-    }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.7;
+        }
 
-    /* CHATBOT ICON - Bottom Right Corner */
-    .chatbot-icon {
-        position: fixed;
-        bottom: 25px;
-        right: 25px;
-        z-index: 1000;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background: #1a1a1a;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.25);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border: 3px solid #fff;
-    }
+        /* CHATBOT ICON - Bottom Right Corner */
+        .chatbot-icon {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 1000;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #1a1a1a;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 3px solid #fff;
+        }
 
-    .chatbot-icon:hover {
-        transform: scale(1.1);
-        box-shadow: 0 6px 30px rgba(0,0,0,0.35);
-    }
+        .chatbot-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(0,0,0,0.35);
+        }
 
-    .chatbot-icon img {
-        width: 32px;
-        height: 32px;
-        border-radius: 0;
-        box-shadow: none;
-    }
+        .chatbot-icon img {
+            width: 32px;
+            height: 32px;
+            border-radius: 0;
+            box-shadow: none;
+        }
 
-    /* HEADER */
-    header {
-        text-align: center;
-        padding: 50px 20px 30px;
-        background: #ffffff;
-        border-bottom: 1px solid #e0e0e0;
-    }
+        /* HEADER */
+        header {
+            text-align: center;
+            padding: 50px 20px 30px;
+            background: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+        }
 
-    .artist-photo {
-        width: 220px;
-        height: 220px;
-        border-radius: 50%;
-        object-fit: cover;
-        box-shadow: 0 4px 25px rgba(0,0,0,0.15);
-        border: 4px solid #fff;
-        margin-bottom: 20px;
-    }
+        .artist-photo {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+            border: 4px solid #fff;
+            margin-bottom: 20px;
+        }
 
-    h1 {
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: #1a1a1a;
-        letter-spacing: -0.5px;
-        margin-bottom: 8px;
-    }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
 
-    .tagline {
-        font-size: 1rem;
-        color: #666;
-        font-weight: 400;
-    }
+        .tagline {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 400;
+        }
 
-    /* RIGHT MENU */
-    .menu-container {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 999;
-    }
+        /* RIGHT MENU */
+        .menu-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 999;
+        }
 
-    .menu-icon {
-        width: 42px;
-        height: 42px;
-        cursor: pointer;
-        background: #1a1a1a;
-        padding: 8px;
-        border-radius: 10px;
-        transition: background 0.3s ease;
-        border: none;
-    }
+        .menu-icon {
+            width: 42px;
+            height: 42px;
+            cursor: pointer;
+            background: #1a1a1a;
+            padding: 8px;
+            border-radius: 10px;
+            transition: background 0.3s ease;
+            border: none;
+        }
 
-    .menu-icon:hover {
-        background: #333;
-    }
+        .menu-icon:hover {
+            background: #333;
+        }
 
-    .dropdown {
-        display: none;
-        position: absolute;
-        right: 0;
-        margin-top: 10px;
-        background: #fff;
-        border-radius: 12px;
-        overflow: hidden;
-        min-width: 220px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-        border: 1px solid #eee;
-    }
+        .dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            margin-top: 10px;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            min-width: 220px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            border: 1px solid #eee;
+        }
 
-    .dropdown select {
-        width: 100%;
-        padding: 14px 16px;
-        border: none;
-        background: #fff;
-        color: #1a1a1a;
-        font-size: 14px;
-        outline: none;
-        cursor: pointer;
-        font-family: inherit;
-    }
+        .dropdown select {
+            width: 100%;
+            padding: 14px 16px;
+            border: none;
+            background: #fff;
+            color: #1a1a1a;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
 
-    .dropdown select option {
-        padding: 10px;
-    }
+        .dropdown select option {
+            padding: 10px;
+        }
 
-    /* MAIN CONTENT */
-    .content {
-        max-width: 850px;
-        margin: 0 auto;
-        padding: 40px 25px;
-    }
+        /* MAIN CONTENT */
+        .content {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px 25px;
+        }
 
-    .section {
-        margin-bottom: 35px;
-        padding: 25px 30px;
-        background: #fafafa;
-        border-radius: 16px;
-        border: 1px solid #f0f0f0;
-    }
+        .section {
+            margin-bottom: 35px;
+            padding: 25px 30px;
+            background: #fafafa;
+            border-radius: 16px;
+            border: 1px solid #f0f0f0;
+        }
 
-    .section-title {
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: #1a1a1a;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        margin-bottom: 15px;
-        padding-bottom: 10px;
-        border-bottom: 2px solid #1a1a1a;
-        display: inline-block;
-    }
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #1a1a1a;
+            display: inline-block;
+        }
 
-    .info-grid {
-        display: grid;
-        grid-template-columns: 140px 1fr;
-        gap: 10px 20px;
-        align-items: baseline;
-    }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 10px 20px;
+            align-items: baseline;
+        }
 
-    .info-label {
-        font-weight: 600;
-        color: #555;
-        font-size: 0.9rem;
-    }
+        .info-label {
+            font-weight: 600;
+            color: #555;
+            font-size: 0.9rem;
+        }
 
-    .info-value {
-        color: #1a1a1a;
-        font-size: 0.95rem;
-    }
+        .info-value {
+            color: #1a1a1a;
+            font-size: 0.95rem;
+        }
 
-    .bio-text {
-        color: #444;
-        font-size: 0.95rem;
-        text-align: justify;
-    }
+        .bio-text {
+            color: #444;
+            font-size: 0.95rem;
+            text-align: justify;
+        }
 
-    .bio-text p {
-        margin-bottom: 14px;
-    }
+        .bio-text p {
+            margin-bottom: 14px;
+        }
 
-    .influences-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-    }
+        .influences-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
 
-    .influence-tag {
-        background: #1a1a1a;
-        color: #fff;
-        padding: 6px 14px;
-        border-radius: 20px;
-        font-size: 0.85rem;
-        font-weight: 500;
-    }
+        .influence-tag {
+            background: #1a1a1a;
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
 
-    .education-item {
-        margin-bottom: 8px;
-        padding-left: 16px;
-        position: relative;
-        color: #444;
-        font-size: 0.95rem;
-    }
+        .education-item {
+            margin-bottom: 8px;
+            padding-left: 16px;
+            position: relative;
+            color: #444;
+            font-size: 0.95rem;
+        }
 
-    .education-item::before {
-        content: "•";
-        position: absolute;
-        left: 0;
-        color: #1a1a1a;
-        font-weight: bold;
-    }
+        .education-item::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #1a1a1a;
+            font-weight: bold;
+        }
 
-    /* BOOKING SECTION */
-    .booking-section {
-        text-align: center;
-        padding: 40px 25px;
-        background: #1a1a1a;
-        color: #fff;
-        margin-top: 20px;
-    }
+        /* BOOKING SECTION */
+        .booking-section {
+            text-align: center;
+            padding: 40px 25px;
+            background: #1a1a1a;
+            color: #fff;
+            margin-top: 20px;
+        }
 
-    .booking-section h2 {
-        font-size: 1.5rem;
-        margin-bottom: 10px;
-        font-weight: 600;
-    }
+        .booking-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
 
-    .booking-section p {
-        color: #aaa;
-        margin-bottom: 25px;
-        font-size: 0.95rem;
-    }
+        .booking-section p {
+            color: #aaa;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
 
-    .book-btn {
-        display: inline-block;
-        padding: 14px 40px;
-        background: #fff;
-        color: #1a1a1a;
-        text-decoration: none;
-        border-radius: 30px;
-        font-weight: 600;
-        font-size: 0.95rem;
-        transition: all 0.3s ease;
-        border: 2px solid #fff;
-    }
+        .book-btn {
+            display: inline-block;
+            padding: 14px 40px;
+            background: #fff;
+            color: #1a1a1a;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border: 2px solid #fff;
+        }
 
-    .book-btn:hover {
-        background: transparent;
-        color: #fff;
-    }
+        .book-btn:hover {
+            background: transparent;
+            color: #fff;
+        }
 
-    /* FOOTER */
-    footer {
-        text-align: center;
-        padding: 30px 20px;
-        background: #fff;
-        color: #888;
-        font-size: 0.85rem;
-        border-top: 1px solid #eee;
-    }
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            background: #fff;
+            color: #888;
+            font-size: 0.85rem;
+            border-top: 1px solid #eee;
+        }
 
-    /* RESPONSIVE */
-    @media (max-width: 600px) {
-        h1 { font-size: 1.8rem; }
-        .info-grid { grid-template-columns: 1fr; gap: 5px; }
-        .info-label { margin-top: 10px; }
-        .section { padding: 20px; }
-        .chatbot-icon { width: 50px; height: 50px; bottom: 15px; right: 15px; }
-    }
-</style>
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            .info-grid { grid-template-columns: 1fr; gap: 5px; }
+            .info-label { margin-top: 10px; }
+            .section { padding: 20px; }
+            .chatbot-icon { width: 50px; height: 50px; bottom: 15px; right: 15px; }
+        }
+    </style>
 </head>
 
 <body>
@@ -377,8 +377,8 @@
     <a href="bookings.html" class="book-btn">Book / Chat Now</a>
 </div>
 
-<audio autoplay loop>
-    <source src="theone.mp3" type="audio/mpeg">
+<audio id="bgMusic" loop>
+    <source src="throne.mp3" type="audio/mpeg">
 </audio>
 
 <footer>
@@ -403,7 +403,12 @@ document.addEventListener("click", function(event) {
         menu.style.display = "none";
     }
 });
+
+// Play background music on first click
+document.addEventListener("click", () => {
+    document.getElementById("bgMusic").play();
+}, { once: true });
 </script>
 
 </body>
-    </html>
+</html>
