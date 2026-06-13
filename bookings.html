@@ -3,96 +3,797 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>XIO-WAY Chatbot</title>
+<title>XIO-WAY | Official Chat</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
-body {
+:root {
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #12121a;
+    --bg-card: #1a1a25;
+    --bg-hover: #252535;
+    --accent: #6366f1;
+    --accent-hover: #818cf8;
+    --accent-glow: rgba(99, 102, 241, 0.3);
+    --text-primary: #f1f1f4;
+    --text-secondary: #9ca3af;
+    --text-muted: #6b7280;
+    --border: rgba(255,255,255,0.06);
+    --shadow: 0 8px 32px rgba(0,0,0,0.4);
+    --radius: 16px;
+    --radius-sm: 10px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: #0f0f1a;
-    color: white;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-image: 
+        radial-gradient(ellipse at 20% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(139, 92, 246, 0.06) 0%, transparent 50%);
 }
 
 .container {
-    max-width: 500px;
-    margin: auto;
-    padding: 10px;
+    width: 100%;
+    max-width: 480px;
+    height: 90vh;
+    max-height: 800px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
 }
 
+/* Header */
 .header {
-    text-align: center;
-    padding: 15px;
+    padding: 20px 24px;
+    background: rgba(18, 18, 26, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    z-index: 10;
 }
 
-.header img {
-    width: 120px;
-    border-radius: 20px;
-    animation: float 3s ease-in-out infinite;
+.avatar-wrapper {
+    position: relative;
+    flex-shrink: 0;
 }
 
-@keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
+.avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--accent), #8b5cf6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    position: relative;
+    overflow: hidden;
 }
 
-.chat-box {
-    background: #1c1c2e;
-    height: 420px;
-    overflow-y: auto;
-    padding: 10px;
+.avatar::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.15) 100%);
+}
+
+.status-dot {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 14px;
+    height: 14px;
+    background: #22c55e;
+    border: 3px solid var(--bg-secondary);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+    50% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+}
+
+.header-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.header-info h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+}
+
+.header-info p {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+    font-weight: 400;
+}
+
+.header-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.icon-btn {
+    width: 36px;
+    height: 36px;
     border-radius: 10px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.icon-btn:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+    border-color: rgba(255,255,255,0.12);
+}
+
+/* Chat Box */
+.chat-box {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    scroll-behavior: smooth;
+}
+
+.chat-box::-webkit-scrollbar {
+    width: 4px;
+}
+
+.chat-box::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.08);
+    border-radius: 4px;
+}
+
+/* Messages */
+.msg-wrapper {
+    display: flex;
+    gap: 10px;
+    max-width: 85%;
+    animation: fadeInUp 0.35s ease-out;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.msg-wrapper.user {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+.msg-wrapper.bot {
+    align-self: flex-start;
+}
+
+.msg-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.msg-wrapper.bot .msg-avatar {
+    background: linear-gradient(135deg, var(--accent), #8b5cf6);
+    color: white;
+}
+
+.msg-wrapper.user .msg-avatar {
+    background: var(--bg-hover);
+    color: var(--text-secondary);
 }
 
 .msg {
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 10px;
+    padding: 12px 16px;
+    border-radius: 18px;
+    font-size: 14px;
+    line-height: 1.55;
+    font-weight: 400;
+    word-wrap: break-word;
 }
 
-.user {
-    background: #2e7dff;
+.msg-wrapper.bot .msg {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border-bottom-left-radius: 4px;
+    border: 1px solid var(--border);
+}
+
+.msg-wrapper.user .msg {
+    background: var(--accent);
+    color: white;
+    border-bottom-right-radius: 4px;
+    box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+.msg-time {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    padding: 0 4px;
+}
+
+.msg-wrapper.user .msg-time {
     text-align: right;
 }
 
-.bot {
-    background: #33334d;
-}
-
-.input-area {
+/* Typing Indicator */
+.typing {
     display: flex;
-    margin-top: 10px;
+    gap: 4px;
+    padding: 16px 18px;
+    background: var(--bg-card);
+    border-radius: 18px;
+    border-bottom-left-radius: 4px;
+    border: 1px solid var(--border);
+    width: fit-content;
 }
 
-input {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
+.typing-dot {
+    width: 7px;
+    height: 7px;
+    background: var(--text-muted);
+    border-radius: 50%;
+    animation: typingBounce 1.4s ease-in-out infinite;
 }
 
-button {
-    padding: 10px;
-    margin-left: 5px;
-    border: none;
-    background: #2e7dff;
-    color: white;
-    border-radius: 5px;
+.typing-dot:nth-child(1) { animation-delay: 0s; }
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingBounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-6px); }
+}
+
+/* Option Buttons */
+.options-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 4px;
 }
 
 .option-btn {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 12px;
     width: 100%;
-    margin: 5px 0;
-    padding: 10px;
-    background: #444;
-    border: none;
-    color: white;
-    border-radius: 8px;
+    padding: 14px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    border-radius: var(--radius-sm);
     cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: left;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
 }
+
+.option-btn::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--accent);
+    opacity: 0;
+    transition: var(--transition);
+}
+
 .option-btn:hover {
-    background: #666;
+    background: var(--bg-hover);
+    border-color: rgba(255,255,255,0.1);
+    transform: translateX(4px);
+}
+
+.option-btn:hover::before {
+    opacity: 1;
+}
+
+.option-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+}
+
+.option-btn:hover .option-icon {
+    background: var(--accent);
+    color: white;
+}
+
+/* Social Links */
+.social-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 4px;
+    overflow: hidden;
+}
+
+.social-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: var(--transition);
+}
+
+.social-item:hover {
+    background: var(--bg-hover);
+}
+
+.social-item:not(:last-child) {
+    border-bottom: 1px solid var(--border);
+}
+
+.social-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.social-icon.telegram { background: rgba(36, 161, 222, 0.12); color: #24a1de; }
+.social-icon.instagram { background: rgba(225, 48, 108, 0.12); color: #e1306c; }
+.social-icon.tiktok { background: rgba(255, 255, 255, 0.08); color: #fff; }
+
+.social-info {
+    flex: 1;
+}
+
+.social-info span {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.social-info small {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.social-arrow {
+    color: var(--text-muted);
+    font-size: 12px;
+    transition: var(--transition);
+}
+
+.social-item:hover .social-arrow {
+    color: var(--accent);
+    transform: translateX(3px);
+}
+
+/* Profile Card */
+.profile-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+.profile-header {
+    padding: 20px;
+    text-align: center;
+    background: linear-gradient(180deg, rgba(99,102,241,0.08) 0%, transparent 100%);
+    border-bottom: 1px solid var(--border);
+}
+
+.profile-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    background: rgba(99, 102, 241, 0.12);
+    color: var(--accent);
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+}
+
+.profile-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.profile-real-name {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.profile-body {
+    padding: 16px 20px;
+}
+
+.profile-section {
+    margin-bottom: 16px;
+}
+
+.profile-section:last-child {
+    margin-bottom: 0;
+}
+
+.profile-section h4 {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.profile-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.tag {
+    padding: 5px 12px;
+    background: rgba(99, 102, 241, 0.08);
+    border: 1px solid rgba(99, 102, 241, 0.15);
+    color: var(--accent-hover);
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.tag.location {
+    background: rgba(34, 197, 94, 0.08);
+    border-color: rgba(34, 197, 94, 0.15);
+    color: #4ade80;
+}
+
+.profile-bio {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+}
+
+/* Booking Form */
+.booking-form {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 14px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: var(--transition);
+}
+
+.form-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.form-input::placeholder {
+    color: var(--text-muted);
+}
+
+textarea.form-input {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--accent), #8b5cf6);
+    border: none;
+    border-radius: var(--radius-sm);
+    color: white;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.1) 100%);
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 25px var(--accent-glow);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 16px 0;
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+}
+
+.btn-secondary {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-secondary:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+    border-color: rgba(255,255,255,0.1);
+}
+
+/* Input Area */
+.input-area {
+    padding: 16px 20px 20px;
+    background: rgba(18, 18, 26, 0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.input-wrapper {
+    flex: 1;
+    position: relative;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: var(--transition);
+}
+
+.input-wrapper input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.input-wrapper input::placeholder {
+    color: var(--text-muted);
+}
+
+.send-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, var(--accent), #8b5cf6);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: var(--transition);
+    flex-shrink: 0;
+    box-shadow: 0 4px 15px var(--accent-glow);
+}
+
+.send-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px var(--accent-glow);
+}
+
+.send-btn:active {
+    transform: scale(0.95);
+}
+
+/* Welcome Screen */
+.welcome-screen {
+    position: absolute;
+    inset: 0;
+    background: var(--bg-secondary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    text-align: center;
+    z-index: 100;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.welcome-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.welcome-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, var(--accent), #8b5cf6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 24px;
+    box-shadow: 0 20px 40px var(--accent-glow);
+    animation: float 4s ease-in-out infinite;
+}
+
+.welcome-screen h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+
+.welcome-screen p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 32px;
+    max-width: 280px;
+}
+
+.start-btn {
+    padding: 14px 40px;
+    background: linear-gradient(135deg, var(--accent), #8b5cf6);
+    border: none;
+    border-radius: 30px;
+    color: white;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 8px 25px var(--accent-glow);
+}
+
+.start-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px var(--accent-glow);
+}
+
+/* Responsive */
+@media (max-width: 520px) {
+    body {
+        padding: 0;
+        align-items: stretch;
+    }
+    .container {
+        max-width: 100%;
+        height: 100vh;
+        max-height: none;
+        border-radius: 0;
+        border: none;
+    }
 }
 </style>
 </head>
@@ -101,116 +802,315 @@ button {
 
 <div class="container">
 
-    <div class="header">
-        <img src="bot.mp4" alt="bot">
-        <h2>XIO-WAY Chat Bot</h2>
+    <!-- Welcome Overlay -->
+    <div class="welcome-screen" id="welcome">
+        <div class="welcome-logo">XW</div>
+        <h1>XIO-WAY</h1>
+        <p>Your direct line to Wayray thee Lyon. Get social links, artist info, and booking details.</p>
+        <button class="start-btn" onclick="startChat()">Start Chatting</button>
     </div>
 
+    <!-- Header -->
+    <div class="header">
+        <div class="avatar-wrapper">
+            <div class="avatar">XW</div>
+            <div class="status-dot"></div>
+        </div>
+        <div class="header-info">
+            <h2>XIO-WAY</h2>
+            <p>Official Chat Assistant</p>
+        </div>
+        <div class="header-actions">
+            <button class="icon-btn" onclick="resetChat()" title="New chat">
+                <i class="fas fa-rotate-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Chat Box -->
     <div class="chat-box" id="chat"></div>
 
+    <!-- Input Area -->
     <div class="input-area">
-        <input id="input" placeholder="Type 'hi'..." />
-        <button onclick="sendMsg()">Send</button>
+        <div class="input-wrapper">
+            <input id="input" placeholder="Type a message..." autocomplete="off" />
+        </div>
+        <button class="send-btn" onclick="sendMsg()">
+            <i class="fas fa-paper-plane"></i>
+        </button>
     </div>
 
 </div>
 
 <script>
-function addMsg(text, type="bot") {
-    let div = document.createElement("div");
-    div.className = "msg " + type;
-    div.innerHTML = text;
-    document.getElementById("chat").appendChild(div);
-    document.getElementById("chat").scrollTop = 999999;
+let chatStarted = false;
+
+function getTime() {
+    const now = new Date();
+    return now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+}
+
+function startChat() {
+    document.getElementById('welcome').classList.add('hidden');
+    chatStarted = true;
+    setTimeout(() => {
+        botIntro();
+    }, 400);
+}
+
+function resetChat() {
+    document.getElementById('chat').innerHTML = '';
+    botIntro();
+}
+
+function addMsg(text, type="bot", isHTML = false) {
+    const chat = document.getElementById("chat");
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "msg-wrapper " + type;
+
+    const avatar = document.createElement("div");
+    avatar.className = "msg-avatar";
+    avatar.textContent = type === "bot" ? "XW" : "You";
+
+    const content = document.createElement("div");
+
+    const msg = document.createElement("div");
+    msg.className = "msg";
+    if (isHTML) {
+        msg.innerHTML = text;
+    } else {
+        msg.textContent = text;
+    }
+
+    const time = document.createElement("div");
+    time.className = "msg-time";
+    time.textContent = getTime();
+
+    content.appendChild(msg);
+    content.appendChild(time);
+    wrapper.appendChild(avatar);
+    wrapper.appendChild(content);
+    chat.appendChild(wrapper);
+    chat.scrollTop = chat.scrollHeight;
+}
+
+function showTyping(callback) {
+    const chat = document.getElementById("chat");
+    const wrapper = document.createElement("div");
+    wrapper.className = "msg-wrapper bot";
+    wrapper.id = "typing-indicator";
+
+    const avatar = document.createElement("div");
+    avatar.className = "msg-avatar";
+    avatar.textContent = "XW";
+
+    const typing = document.createElement("div");
+    typing.className = "typing";
+    typing.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+
+    wrapper.appendChild(avatar);
+    wrapper.appendChild(typing);
+    chat.appendChild(wrapper);
+    chat.scrollTop = chat.scrollHeight;
+
+    setTimeout(() => {
+        const el = document.getElementById("typing-indicator");
+        if (el) el.remove();
+        callback();
+    }, 1200);
 }
 
 function sendMsg() {
     let input = document.getElementById("input");
-    let text = input.value.trim().toLowerCase();
+    let text = input.value.trim();
 
     if (!text) return;
 
-    addMsg(input.value, "user");
+    addMsg(text, "user");
     input.value = "";
 
-    if (text === "hi") {
-        botIntro();
+    const lower = text.toLowerCase();
+
+    if (lower === "hi" || lower === "hello" || lower === "hey") {
+        showTyping(botIntro);
+    } else if (lower.includes("social") || lower.includes("instagram") || lower.includes("telegram") || lower.includes("tiktok")) {
+        showTyping(socialMedia);
+    } else if (lower.includes("who") || lower.includes("wayray") || lower.includes("artist") || lower.includes("profile")) {
+        showTyping(whoIsWayray);
+    } else if (lower.includes("book") || lower.includes("contact") || lower.includes("email")) {
+        showTyping(bookings);
+    } else {
+        showTyping(() => {
+            addMsg("I can help you with social media links, artist info, or bookings. Just say \"hi\" or pick an option below!");
+            showOptions();
+        });
     }
 }
 
-function botIntro() {
-    addMsg("Hello 👋 I am XIO-WAY, a XIO chat bot designed for Wayray thee Lyon. How can I assist you?");
-
-    let options = `
-        <button class="option-btn" onclick="socialMedia()">Wayray Social Media</button>
-        <button class="option-btn" onclick="whoIsWayray()">Who is Wayray</button>
-        <button class="option-btn" onclick="bookings()">Bookings</button>
+function showOptions() {
+    const options = `
+        <div class="options-grid">
+            <button class="option-btn" onclick="showTyping(socialMedia)">
+                <div class="option-icon"><i class="fas fa-share-nodes"></i></div>
+                <span>Wayray Social Media</span>
+            </button>
+            <button class="option-btn" onclick="showTyping(whoIsWayray)">
+                <div class="option-icon"><i class="fas fa-user"></i></div>
+                <span>Who is Wayray</span>
+            </button>
+            <button class="option-btn" onclick="showTyping(bookings)">
+                <div class="option-icon"><i class="fas fa-calendar-check"></i></div>
+                <span>Bookings</span>
+            </button>
+        </div>
     `;
-
-    addMsg(options);
+    addMsg(options, "bot", true);
 }
 
-/* OPTION 1 */
+function botIntro() {
+    addMsg("Hello! Welcome to XIO-WAY. I'm here to connect you with Wayray thee Lyon. What would you like to know?");
+    showOptions();
+}
+
+/* OPTION 1: Social Media */
 function socialMedia() {
-    addMsg(`
-        <b>Social Media</b><br><br>
-        Telegram: <a href="https://t.me/wayraytheelyon" target="_blank">Open Telegram</a><br>
-        Instagram: <a href="https://t.me/wayraytheelyon" target="_blank">Open Instagram</a><br>
-        TikTok: <a href="https://t.me/wayraytheelyon" target="_blank">Open TikTok</a>
-    `);
+    const content = `
+        <div style="margin-bottom: 8px; font-weight: 600; font-size: 15px;">Social Media</div>
+        <div class="social-card">
+            <a href="https://t.me/wayraytheelyon" target="_blank" class="social-item">
+                <div class="social-icon telegram"><i class="fab fa-telegram"></i></div>
+                <div class="social-info">
+                    <span>Telegram</span>
+                    <small>@wayraytheelyon</small>
+                </div>
+                <i class="fas fa-chevron-right social-arrow"></i>
+            </a>
+            <a href="https://instagram.com/wayraytheelyon" target="_blank" class="social-item">
+                <div class="social-icon instagram"><i class="fab fa-instagram"></i></div>
+                <div class="social-info">
+                    <span>Instagram</span>
+                    <small>@wayraytheelyon</small>
+                </div>
+                <i class="fas fa-chevron-right social-arrow"></i>
+            </a>
+            <a href="https://www.tiktok.com/@wayray.thee.lyon?_r=1&_d=eab1f35m8lglb7&sec_uid=MS4wLjABAAAAQO7S95-hORuxjSjV77V4T05DOcPSoFv0YvJ_VVtmhrClTWHBBw8PmePJgYO6ElZm&share_author_id=7650914534786712596&sharer_language=en&source=h5_m&u_code=f42j9l8hj2221b&timestamp=1781367427&user_id=7650914534786712596&sec_user_id=MS4wLjABAAAAQO7S95-hORuxjSjV77V4T05DOcPSoFv0YvJ_VVtmhrClTWHBBw8PmePJgYO6ElZm&item_author_type=1&utm_source=copy&utm_campaign=client_share&utm_medium=android&share_iid=7637655711690000148&share_link_id=65e5ff4e-155f-4a01-b77d-5519fd4512a1&share_app_id=1233&ugbiz_name=ACCOUNT&ug_btm=b8727%2Cb7360&social_share_type=5&enable_checksum=1" target="_blank" class="social-item">
+                <div class="social-icon tiktok"><i class="fab fa-tiktok"></i></div>
+                <div class="social-info">
+                    <span>TikTok</span>
+                    <small>@wayraytheelyon</small>
+                </div>
+                <i class="fas fa-chevron-right social-arrow"></i>
+            </a>
+        </div>
+    `;
+    addMsg(content, "bot", true);
 }
 
-/* OPTION 2 */
+/* OPTION 2: Who is Wayray */
 function whoIsWayray() {
-    addMsg(`
-        <b>Artist Profile</b><br><br>
-        Artist Name: Wayray thee Lyon<br>
-        Real Name: Thulane Zwelithini Nonyane<br>
-        Genre: Hip Hop | Afro Pop<br>
-        Origin: Pretoria, South Africa<br><br>
-
-        Wayray thee Lyon is a South African Hip Hop and Afro-Pop artist born and raised in Mabopane Block EW, Pretoria. He represents resilience, ambition, and real-life storytelling from township life.<br><br>
-
-        Raised by his late grandmother Sarah Stokie Moeletse, he developed discipline early in life. He attended Sello Primary School (Patric Moloto Primary) and M.H. Baloyi Secondary School where he focused on Dramatic Arts and Business Studies.<br><br>
-
-        Influences: AKA, Nasty C, Cassper Nyovest, Kwesta, Birdman.<br><br>
-
-        Core Identity: Story-driven Hip Hop / Afro-Pop artist focused on emotional honesty and street motivation.
-    `);
+    const content = `
+        <div class="profile-card">
+            <div class="profile-header">
+                <div class="profile-badge"><i class="fas fa-music" style="font-size:10px;"></i> Artist Profile</div>
+                <div class="profile-name">Wayray thee Lyon</div>
+                <div class="profile-real-name">Thulane Zwelithini Nonyane</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-section">
+                    <h4>Genre</h4>
+                    <div class="profile-tags">
+                        <span class="tag">Hip Hop</span>
+                        <span class="tag">Afro Pop</span>
+                    </div>
+                </div>
+                <div class="profile-section">
+                    <h4>Origin</h4>
+                    <div class="profile-tags">
+                        <span class="tag location"><i class="fas fa-location-dot" style="font-size:10px; margin-right:4px;"></i>Pretoria, South Africa</span>
+                    </div>
+                </div>
+                <div class="profile-section">
+                    <h4>About</h4>
+                    <p class="profile-bio">
+                        Born and raised in Mabopane Block EW, Pretoria. Wayray thee Lyon represents resilience, ambition, and real-life storytelling from township life. Raised by his late grandmother Sarah Stokie Moeletse, he developed discipline early. He attended Sello Primary School and M.H. Baloyi Secondary School, focusing on Dramatic Arts and Business Studies.
+                    </p>
+                </div>
+                <div class="profile-section">
+                    <h4>Influences</h4>
+                    <div class="profile-tags">
+                        <span class="tag">AKA</span>
+                        <span class="tag">Nasty C</span>
+                        <span class="tag">Cassper Nyovest</span>
+                        <span class="tag">Kwesta</span>
+                        <span class="tag">Birdman</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    addMsg(content, "bot", true);
 }
 
-/* OPTION 3 */
+/* OPTION 3: Bookings */
 function bookings() {
-    addMsg(`
-        <b>Bookings</b><br><br>
-        Send your message + email below:<br><br>
-        <input id="email" placeholder="Your email"/><br><br>
-        <textarea id="msg" placeholder="Your message"></textarea><br><br>
-        <button class="option-btn" onclick="sendBooking()">Send Booking Request</button><br><br>
-
-        OR open Gmail:<br>
-        <button class="option-btn" onclick="openGmail()">Open Gmail App</button>
-    `);
+    const content = `
+        <div style="margin-bottom: 8px; font-weight: 600; font-size: 15px;">Bookings & Inquiries</div>
+        <div class="booking-form">
+            <div class="form-group">
+                <label>Your Email</label>
+                <input type="email" id="email" class="form-input" placeholder="you@example.com" />
+            </div>
+            <div class="form-group">
+                <label>Message</label>
+                <textarea id="msg" class="form-input" placeholder="Tell us about your event, date, and requirements..."></textarea>
+            </div>
+            <button class="btn-primary" onclick="sendBooking()">
+                <i class="fas fa-paper-plane"></i>
+                Send Booking Request
+            </button>
+            <div class="divider">or</div>
+            <button class="btn-secondary" onclick="openGmail()">
+                <i class="fab fa-google"></i>
+                Open in Gmail
+            </button>
+        </div>
+    `;
+    addMsg(content, "bot", true);
 }
 
 function sendBooking() {
     let email = document.getElementById("email").value;
     let msg = document.getElementById("msg").value;
 
-    let mailto = `mailto:wayraybookings012@gmail.com?subject=Booking Request&body=Email: ${email}%0D%0AMessage: ${msg}`;
+    if (!email || !msg) {
+        addMsg("Please fill in both your email and message before sending.", "bot");
+        return;
+    }
+
+    let mailto = "mailto:wayraybookings012@gmail.com?subject=Booking Request&body=From: " + email + "%0D%0A%0D%0AMessage:%0D%0A" + encodeURIComponent(msg);
     window.location.href = mailto;
+
+    setTimeout(() => {
+        addMsg("Booking request prepared! Your email app should open shortly.", "bot");
+    }, 500);
 }
 
 function openGmail() {
-    window.location.href =
-        "mailto:wayraybookings012@gmail.com?subject=Booking Request";
+    window.location.href = "mailto:wayraybookings012@gmail.com?subject=Booking Request";
+    setTimeout(() => {
+        addMsg("Gmail compose window opened.", "bot");
+    }, 500);
 }
 
-/* auto greet if user types hi and presses enter */
+/* Enter key support */
 document.getElementById("input").addEventListener("keypress", function(e){
     if (e.key === "Enter") sendMsg();
 });
+
+/* Auto-focus input when welcome screen dismissed */
+document.getElementById("input").focus();
 </script>
 
 </body>
-</html>
+    </html>
