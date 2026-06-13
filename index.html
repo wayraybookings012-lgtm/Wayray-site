@@ -2,103 +2,294 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Wayray thee Lyon</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wayray thee Lyon | Official Artist Page</title>
 
 <style>
-    body {
+    * {
         margin: 0;
-        font-family: Arial, sans-serif;
-        background: linear-gradient(120deg, #000, #111, #1a1a1a);
-        color: white;
+        padding: 0;
+        box-sizing: border-box;
     }
 
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #ffffff;
+        color: #1a1a1a;
+        line-height: 1.7;
+    }
+
+    /* CHATBOT ICON - Bottom Right Corner */
+    .chatbot-icon {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        z-index: 1000;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: #1a1a1a;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 3px solid #fff;
+    }
+
+    .chatbot-icon:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 30px rgba(0,0,0,0.35);
+    }
+
+    .chatbot-icon img {
+        width: 32px;
+        height: 32px;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    /* HEADER */
     header {
         text-align: center;
-        padding: 20px;
+        padding: 50px 20px 30px;
+        background: #ffffff;
+        border-bottom: 1px solid #e0e0e0;
     }
 
-    img {
+    .artist-photo {
         width: 220px;
-        border-radius: 20px;
-        box-shadow: 0 0 20px #00ffcc;
+        height: 220px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+        border: 4px solid #fff;
+        margin-bottom: 20px;
     }
 
-    /* RIGHT MENU ICON */
+    h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        letter-spacing: -0.5px;
+        margin-bottom: 8px;
+    }
+
+    .tagline {
+        font-size: 1rem;
+        color: #666;
+        font-weight: 400;
+    }
+
+    /* RIGHT MENU */
     .menu-container {
         position: fixed;
-        top: 10px;
-        right: 10px;
+        top: 20px;
+        right: 20px;
         z-index: 999;
     }
 
     .menu-icon {
-        width: 40px;
+        width: 42px;
+        height: 42px;
         cursor: pointer;
-        background: white;
-        padding: 5px;
-        border-radius: 6px;
+        background: #1a1a1a;
+        padding: 8px;
+        border-radius: 10px;
+        transition: background 0.3s ease;
+        border: none;
     }
 
-    /* DROPDOWN */
+    .menu-icon:hover {
+        background: #333;
+    }
+
     .dropdown {
         display: none;
         position: absolute;
         right: 0;
         margin-top: 10px;
-        background: white;
-        border-radius: 8px;
+        background: #fff;
+        border-radius: 12px;
         overflow: hidden;
-        min-width: 180px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        min-width: 220px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        border: 1px solid #eee;
     }
 
     .dropdown select {
         width: 100%;
-        padding: 10px;
+        padding: 14px 16px;
         border: none;
-        background: white;
-        color: black;
+        background: #fff;
+        color: #1a1a1a;
         font-size: 14px;
         outline: none;
-    }
-
-    .content {
-        max-width: 900px;
-        margin: auto;
-        padding: 20px;
-        line-height: 1.6;
-        white-space: pre-wrap;
-    }
-
-    .book {
-        text-align: center;
-        margin-top: 30px;
-    }
-
-    .book img {
-        width: 180px;
         cursor: pointer;
-        transition: 0.3s;
+        font-family: inherit;
     }
 
-    .book img:hover {
-        transform: scale(1.05);
+    .dropdown select option {
+        padding: 10px;
     }
 
+    /* MAIN CONTENT */
+    .content {
+        max-width: 850px;
+        margin: 0 auto;
+        padding: 40px 25px;
+    }
+
+    .section {
+        margin-bottom: 35px;
+        padding: 25px 30px;
+        background: #fafafa;
+        border-radius: 16px;
+        border: 1px solid #f0f0f0;
+    }
+
+    .section-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #1a1a1a;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #1a1a1a;
+        display: inline-block;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        gap: 10px 20px;
+        align-items: baseline;
+    }
+
+    .info-label {
+        font-weight: 600;
+        color: #555;
+        font-size: 0.9rem;
+    }
+
+    .info-value {
+        color: #1a1a1a;
+        font-size: 0.95rem;
+    }
+
+    .bio-text {
+        color: #444;
+        font-size: 0.95rem;
+        text-align: justify;
+    }
+
+    .bio-text p {
+        margin-bottom: 14px;
+    }
+
+    .influences-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .influence-tag {
+        background: #1a1a1a;
+        color: #fff;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+
+    .education-item {
+        margin-bottom: 8px;
+        padding-left: 16px;
+        position: relative;
+        color: #444;
+        font-size: 0.95rem;
+    }
+
+    .education-item::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: #1a1a1a;
+        font-weight: bold;
+    }
+
+    /* BOOKING SECTION */
+    .booking-section {
+        text-align: center;
+        padding: 40px 25px;
+        background: #1a1a1a;
+        color: #fff;
+        margin-top: 20px;
+    }
+
+    .booking-section h2 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+
+    .booking-section p {
+        color: #aaa;
+        margin-bottom: 25px;
+        font-size: 0.95rem;
+    }
+
+    .book-btn {
+        display: inline-block;
+        padding: 14px 40px;
+        background: #fff;
+        color: #1a1a1a;
+        text-decoration: none;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        border: 2px solid #fff;
+    }
+
+    .book-btn:hover {
+        background: transparent;
+        color: #fff;
+    }
+
+    /* FOOTER */
     footer {
         text-align: center;
-        margin-top: 40px;
-        padding: 20px;
-        color: #aaa;
+        padding: 30px 20px;
+        background: #fff;
+        color: #888;
+        font-size: 0.85rem;
+        border-top: 1px solid #eee;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+        h1 { font-size: 1.8rem; }
+        .info-grid { grid-template-columns: 1fr; gap: 5px; }
+        .info-label { margin-top: 10px; }
+        .section { padding: 20px; }
+        .chatbot-icon { width: 50px; height: 50px; bottom: 15px; right: 15px; }
     }
 </style>
 </head>
 
 <body>
 
+<!-- CHATBOT ICON - Bottom Right Corner -->
+<a href="bookings.html" class="chatbot-icon" title="Chat with AI / Book Wayray">
+    <img src="bot.png" alt="Chatbot">
+</a>
+
 <!-- RIGHT MENU -->
 <div class="menu-container">
-    <img src="menu.png" class="menu-icon" onclick="toggleMenu()">
+    <img src="menu.png" class="menu-icon" onclick="toggleMenu()" alt="Menu">
 
     <div class="dropdown" id="dropdownMenu">
         <select onchange="openLink(this.value)">
@@ -112,22 +303,78 @@
 </div>
 
 <header>
+    <img src="way.png" alt="Wayray thee Lyon" class="artist-photo">
     <h1>Wayray thee Lyon</h1>
-    <img src="way.png" alt="Wayray thee Lyon">
+    <p class="tagline">Hip Hop | Afro Pop &mdash; Pretoria, South Africa</p>
 </header>
 
 <div class="content">
-Artist Name: Wayray thee Lyon
-Real Name: Thulane Zwelithini Nonyane
-Genre: Hip Hop | Afro Pop
-Origin: Pretoria, South Africa
+
+    <!-- BASIC INFO -->
+    <div class="section">
+        <div class="section-title">Artist Profile</div>
+        <div class="info-grid">
+            <span class="info-label">Artist Name</span>
+            <span class="info-value">Wayray thee Lyon</span>
+
+            <span class="info-label">Real Name</span>
+            <span class="info-value">Thulane Zwelithini Nonyane</span>
+
+            <span class="info-label">Genre</span>
+            <span class="info-value">Hip Hop | Afro Pop</span>
+
+            <span class="info-label">Origin</span>
+            <span class="info-value">Pretoria, South Africa</span>
+
+            <span class="info-label">Based In</span>
+            <span class="info-value">Pretoria, South Africa</span>
+
+            <span class="info-label">Active Years</span>
+            <span class="info-value">Emerging Artist</span>
+
+            <span class="info-label">Core Identity</span>
+            <span class="info-value">Story-driven Hip Hop / Afro-Pop artist with a focus on real-life narratives, ambition, and emotional honesty</span>
+        </div>
+    </div>
+
+    <!-- BIOGRAPHY -->
+    <div class="section">
+        <div class="section-title">Biography</div>
+        <div class="bio-text">
+            <p>Wayray thee Lyon is a South African Hip Hop and Afro-Pop artist born and raised in Mabopane Block EW, Pretoria. Emerging from an informal settlement environment, he represents a story of resilience, ambition, and self-belief shaped by real-life experiences in the streets of Pretoria.</p>
+            <p>Raised by his late grandmother, Sarah Stokie Moeletse, Wayray developed discipline and direction from an early age, with strong values that continue to influence his music and mindset today. His journey reflects a young artist who grew through self-doubt but transformed passion into purpose.</p>
+            <p>Wayray thee Lyon is building his identity as an artist focused on authentic storytelling, emotional expression, and street-rooted motivation. His music reflects personal growth, struggle, and the drive to rise beyond his environment.</p>
+        </div>
+    </div>
+
+    <!-- EDUCATION -->
+    <div class="section">
+        <div class="section-title">Education</div>
+        <div class="education-item">Sello Primary School (later renamed Patric Moloto Primary School)</div>
+        <div class="education-item">M.H. Baloyi Secondary School</div>
+        <p style="margin-top: 12px; color: #555; font-size: 0.9rem;">At M.H. Baloyi Secondary School, Wayray discovered a strong passion for <strong>Dramatic Arts</strong> and <strong>Business Studies</strong>. These subjects helped shape his creativity, storytelling ability, and understanding of the music business.</p>
+    </div>
+
+    <!-- INFLUENCES -->
+    <div class="section">
+        <div class="section-title">Musical Influences</div>
+        <p style="margin-bottom: 12px; color: #555; font-size: 0.9rem;">His sound is influenced by both local and international icons. The 2015 era of South African hip hop played a major role in shaping his artistic direction and ambition.</p>
+        <div class="influences-list">
+            <span class="influence-tag">AKA</span>
+            <span class="influence-tag">Nasty C</span>
+            <span class="influence-tag">Cassper Nyovest</span>
+            <span class="influence-tag">Kwesta</span>
+            <span class="influence-tag">Birdman</span>
+        </div>
+    </div>
+
 </div>
 
-<div class="book">
-    <a href="bookings.html">
-        <img src="bot.png" alt="Book Wayray">
-    </a>
-    <p>Click image to book Wayray / Chat with AI</p>
+<!-- BOOKING SECTION -->
+<div class="booking-section">
+    <h2>Bookings & Inquiries</h2>
+    <p>Interested in booking Wayray thee Lyon or chatting with our AI assistant?</p>
+    <a href="bookings.html" class="book-btn">Book / Chat Now</a>
 </div>
 
 <audio autoplay loop>
@@ -147,7 +394,16 @@ function toggleMenu() {
 function openLink(url) {
     if (url) window.open(url, "_blank");
 }
+
+// Close dropdown when clicking outside
+document.addEventListener("click", function(event) {
+    const menu = document.getElementById("dropdownMenu");
+    const icon = document.querySelector(".menu-icon");
+    if (!icon.contains(event.target) && !menu.contains(event.target)) {
+        menu.style.display = "none";
+    }
+});
 </script>
 
 </body>
-</html>
+    </html>
